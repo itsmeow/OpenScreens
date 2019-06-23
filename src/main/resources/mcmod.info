@@ -1,0 +1,16 @@
+[
+{
+  "modid": "openscreens",
+  "name": "OpenScreens",
+  "description": "Adds new screens to OpenComputers",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["its_meow"],
+  "credits": "its_meow: everything",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

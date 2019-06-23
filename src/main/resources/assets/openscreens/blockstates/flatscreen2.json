@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "pitch=north,yaw=north": { "model": "openscreens:flatscreen" },
+        "pitch=north,yaw=south": { "model": "openscreens:flatscreen", "y": 180 },
+        "pitch=north,yaw=east":  { "model": "openscreens:flatscreen", "y": 90 },
+        "pitch=north,yaw=west":  { "model": "openscreens:flatscreen", "y": 270 },
+        "pitch=up,yaw=north": { "model": "openscreens:flatscreen", "x": -90 },
+        "pitch=up,yaw=south": { "model": "openscreens:flatscreen", "x": -90, "y": 180 },
+        "pitch=up,yaw=east":  { "model": "openscreens:flatscreen", "x": -90, "y": 90 },
+        "pitch=up,yaw=west":  { "model": "openscreens:flatscreen", "x": -90, "y": 270 },
+        "pitch=down,yaw=north": { "model": "openscreens:flatscreen", "x": 90 },
+        "pitch=down,yaw=south": { "model": "openscreens:flatscreen", "x": 90, "y": 180 },
+        "pitch=down,yaw=east":  { "model": "openscreens:flatscreen", "x": 90, "y": 270 },
+        "pitch=down,yaw=west":  { "model": "openscreens:flatscreen", "x": 90, "y": 90 }
+    }
+}
