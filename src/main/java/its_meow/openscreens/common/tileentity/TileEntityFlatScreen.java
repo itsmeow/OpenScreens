@@ -19,9 +19,4 @@ public class TileEntityFlatScreen extends Screen {
         return side == null || this.facing() == null ? false : side == this.facing().getOpposite();
     }
 
-    @Override
-    public boolean hasKeyboard() {
-        return true;
-    }
-
 }

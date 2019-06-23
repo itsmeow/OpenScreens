@@ -1,11 +1,17 @@
 package its_meow.openscreens.common.block;
 
+import java.util.List;
+
 import its_meow.openscreens.common.tileentity.TileEntityFlatScreen;
 import li.cil.oc.common.block.Screen;
 import li.cil.oc.common.block.property.PropertyRotatable;
+import li.cil.oc.util.Rarity;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -29,8 +35,18 @@ public class BlockFlatScreen extends Screen {
     }
 
     @Override
+    public EnumRarity rarity(ItemStack statck) {
+        return Rarity.byTier(tier());
+    }
+
+    @Override
+    public void tooltipBody(int metadata, ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+        super.tooltipBody(metadata, stack, world, tooltip, advanced);
+    }
+
+    @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        return this.getDefaultState().withProperty(PropertyRotatable.Yaw(), placer.getHorizontalFacing().getOpposite()).withProperty(PropertyRotatable.Pitch(), ((facing != EnumFacing.UP && facing != EnumFacing.DOWN) ? EnumFacing.NORTH : facing));
+        return this.getDefaultState().withProperty(PropertyRotatable.Yaw(), placer.getHorizontalFacing().getOpposite()).withProperty(PropertyRotatable.Pitch(), ((placer.rotationPitch > 45 && facing == EnumFacing.UP) || (placer.prevRotationPitch < -45 && facing == EnumFacing.DOWN)) ? facing : EnumFacing.NORTH);
     }
 
     @Override
@@ -58,13 +74,13 @@ public class BlockFlatScreen extends Screen {
         if(source.getTileEntity(pos) instanceof TileEntityFlatScreen) {
             EnumFacing facing = ((TileEntityFlatScreen)source.getTileEntity(pos)).facing();
             switch(facing) {
-                case NORTH: return NORTH_AABB;
-                case EAST: return EAST_AABB;
-                case SOUTH: return SOUTH_AABB;
-                case WEST: return WEST_AABB;
-                case UP: return UP_AABB;
-                case DOWN: return DOWN_AABB;
-                default: return NORTH_AABB;
+            case NORTH: return NORTH_AABB;
+            case EAST: return EAST_AABB;
+            case SOUTH: return SOUTH_AABB;
+            case WEST: return WEST_AABB;
+            case UP: return UP_AABB;
+            case DOWN: return DOWN_AABB;
+            default: return NORTH_AABB;
             }
         }
         return NORTH_AABB;

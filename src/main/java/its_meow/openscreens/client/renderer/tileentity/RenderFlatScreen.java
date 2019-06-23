@@ -37,7 +37,7 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
 
     public TileEntityFlatScreen screen = null;
 
-    public Set<Block> screens = Sets.newHashSet(OpenScreens.FLAT_SCREEN_BLOCK, OpenScreens.FLAT_SCREEN_BLOCK_2, OpenScreens.FLAT_SCREEN_BLOCK_3);
+    public Set<Block> screens = Sets.newHashSet(OpenScreens.FLAT_SCREEN_BLOCK_1, OpenScreens.FLAT_SCREEN_BLOCK_2, OpenScreens.FLAT_SCREEN_BLOCK_3);
 
     public boolean canUseBlendColor = GLContext.getCapabilities().OpenGL14;
 
@@ -168,13 +168,15 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
         float th = sy * 16f;
 
         transform();
-
+        
+        float border = 0.5F;
+        
         // Offset from border.
-        GlStateManager.translate(sx * 2.25f / tw, sy * 2.25f / th, 0);
+        GlStateManager.translate(sx * border / tw, sy * border / th, 0);
 
         // Inner size (minus borders).
-        float isx = sx - (4.5f / 16);
-        float isy = sy - (4.5f / 16);
+        float isx = sx - (border / 8);
+        float isy = sy - (border / 8);
 
         // Scale based on actual buffer size.
         float sizeX = screen.buffer().renderWidth();
