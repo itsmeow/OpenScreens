@@ -19,7 +19,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,11 +37,11 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
 
     public TileEntityFlatScreen screen = null;
 
-    public Set<Block> screens = Sets.newHashSet(OpenScreens.FLAT_SCREEN_BLOCK);
+    public Set<Block> screens = Sets.newHashSet(OpenScreens.FLAT_SCREEN_BLOCK, OpenScreens.FLAT_SCREEN_BLOCK_2, OpenScreens.FLAT_SCREEN_BLOCK_3);
 
     public boolean canUseBlendColor = GLContext.getCapabilities().OpenGL14;
 
-    public static final ResourceLocation UP_ARROW = new ResourceLocation(Settings.resourceDomain(), "textures/blocks/overlay/screen_up_indicator");
+    public static final ResourceLocation UP_ARROW = new ResourceLocation(Settings.resourceDomain(), "textures/blocks/overlay/screen_up_indicator.png");
 
     @Override
     public void render(TileEntityFlatScreen te, double x, double y, double z, float partialTicks, int destroyStage, float a) {
@@ -138,7 +137,7 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
                     GlStateManager.pushMatrix();
                     transform();
                     GlStateManager.depthMask(false);
-                    GlStateManager.translate(screen.width() / 2f - 0.5f, screen.height() / 2f - 0.5f, 0.05f);
+                    GlStateManager.translate(screen.width() / 2f - 0.5f, screen.height() / 2f - 0.5f, -0.935f);
 
                     Tessellator t = Tessellator.getInstance();
                     BufferBuilder r = t.getBuffer();
@@ -146,12 +145,10 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
                     r.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
                     this.bindTexture(UP_ARROW);
 
-                    TextureAtlasSprite icon = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(UP_ARROW.toString());
-
-                    r.pos(0, 1, 0).tex(icon.getMinU(), icon.getMaxV()).endVertex();
-                    r.pos(1, 1, 0).tex(icon.getMaxU(), icon.getMaxV()).endVertex();
-                    r.pos(1, 0, 0).tex(icon.getMaxU(), icon.getMinV()).endVertex();
-                    r.pos(0, 0, 0).tex(icon.getMinU(), icon.getMinV()).endVertex();
+                    r.pos(0, 1, 0).tex(0, 1).endVertex();
+                    r.pos(1, 1, 0).tex(1, 1).endVertex();
+                    r.pos(1, 0, 0).tex(1, 0).endVertex();
+                    r.pos(0, 0, 0).tex(0, 0).endVertex();
 
                     t.draw();
 
