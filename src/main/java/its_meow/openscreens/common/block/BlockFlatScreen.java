@@ -1,17 +1,11 @@
 package its_meow.openscreens.common.block;
 
-import java.util.List;
-
 import its_meow.openscreens.common.tileentity.TileEntityFlatScreen;
 import li.cil.oc.common.block.Screen;
 import li.cil.oc.common.block.property.PropertyRotatable;
-import li.cil.oc.util.Rarity;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -32,16 +26,6 @@ public class BlockFlatScreen extends Screen {
         super(tier);
         this.setHardness(5F);
         this.setHarvestLevel("pickaxe", 0);
-    }
-
-    @Override
-    public EnumRarity rarity(ItemStack statck) {
-        return Rarity.byTier(tier());
-    }
-
-    @Override
-    public void tooltipBody(int metadata, ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-        super.tooltipBody(metadata, stack, world, tooltip, advanced);
     }
 
     @Override
