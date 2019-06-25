@@ -1,7 +1,12 @@
 package its_meow.openscreens;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import its_meow.openscreens.common.block.BlockFlatScreen;
 import its_meow.openscreens.common.tileentity.TileEntityFlatScreen;
+import its_meow.openscreens.common.tileentity.TileEntityHoloScreen;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -10,10 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -29,40 +30,41 @@ public class OpenScreens {
 
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(FLAT_SCREEN_BLOCK_1);
+            return new ItemStack(BACK_FLAT_SCREEN_BLOCK_1);
         }
         
     };
     
-    public static final Block FLAT_SCREEN_BLOCK_1 = new BlockFlatScreen(0).setRegistryName(MODID + ":flatscreen1").setTranslationKey(MODID + ".flatscreen1").setCreativeTab(OPENSCREENS_TAB);
-    public static final Block FLAT_SCREEN_BLOCK_2 = new BlockFlatScreen(1).setRegistryName(MODID + ":flatscreen2").setTranslationKey(MODID + ".flatscreen2").setCreativeTab(OPENSCREENS_TAB);
-    public static final Block FLAT_SCREEN_BLOCK_3 = new BlockFlatScreen(2).setRegistryName(MODID + ":flatscreen3").setTranslationKey(MODID + ".flatscreen3").setCreativeTab(OPENSCREENS_TAB);
-
-	@EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-    }
-
-    @EventHandler
-    public void init(FMLInitializationEvent event) {
-
-    }
-
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-
-	}
+    public static final Block BACK_FLAT_SCREEN_BLOCK_1 = new BlockFlatScreen(true, 0).setRegistryName(MODID + ":backflatscreen1").setTranslationKey(MODID + ".backflatscreen1");
+    public static final Block BACK_FLAT_SCREEN_BLOCK_2 = new BlockFlatScreen(true, 1).setRegistryName(MODID + ":backflatscreen2").setTranslationKey(MODID + ".backflatscreen2");
+    public static final Block BACK_FLAT_SCREEN_BLOCK_3 = new BlockFlatScreen(true, 2).setRegistryName(MODID + ":backflatscreen3").setTranslationKey(MODID + ".backflatscreen3");
+    public static final Block FRONT_FLAT_SCREEN_BLOCK_1 = new BlockFlatScreen(false, 0).setRegistryName(MODID + ":frontflatscreen1").setTranslationKey(MODID + ".frontflatscreen1");
+    public static final Block FRONT_FLAT_SCREEN_BLOCK_2 = new BlockFlatScreen(false, 1).setRegistryName(MODID + ":frontflatscreen2").setTranslationKey(MODID + ".frontflatscreen2");
+    public static final Block FRONT_FLAT_SCREEN_BLOCK_3 = new BlockFlatScreen(false, 2).setRegistryName(MODID + ":frontflatscreen3").setTranslationKey(MODID + ".frontflatscreen3");
+    
+    public static final List<Block> SCREENS = Lists.newArrayList(
+        OpenScreens.BACK_FLAT_SCREEN_BLOCK_1, 
+        OpenScreens.BACK_FLAT_SCREEN_BLOCK_2, 
+        OpenScreens.BACK_FLAT_SCREEN_BLOCK_3,
+        OpenScreens.FRONT_FLAT_SCREEN_BLOCK_1, 
+        OpenScreens.FRONT_FLAT_SCREEN_BLOCK_2, 
+        OpenScreens.FRONT_FLAT_SCREEN_BLOCK_3
+    );
     
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
-        event.getRegistry().registerAll(FLAT_SCREEN_BLOCK_1, FLAT_SCREEN_BLOCK_2, FLAT_SCREEN_BLOCK_3);
+        for(Block block : SCREENS) {
+            event.getRegistry().register(block.setCreativeTab(OPENSCREENS_TAB));
+        }
         GameRegistry.registerTileEntity(TileEntityFlatScreen.class, new ResourceLocation(MODID + ":flatscreen"));
+        GameRegistry.registerTileEntity(TileEntityHoloScreen.class, new ResourceLocation(MODID + ":holoscreen"));
     }
     
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(new ItemBlock(FLAT_SCREEN_BLOCK_1).setRegistryName(MODID + ":flatscreen1"));
-        event.getRegistry().register(new ItemBlock(FLAT_SCREEN_BLOCK_2).setRegistryName(MODID + ":flatscreen2"));
-        event.getRegistry().register(new ItemBlock(FLAT_SCREEN_BLOCK_3).setRegistryName(MODID + ":flatscreen3"));
+        for(Block block : SCREENS) {
+            event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+        }
     }
 	
 }

@@ -1,4 +1,7 @@
 itemGroup.openscreens=OpenScreens
-tile.openscreens.flatscreen1.name=Flatscreen (Tier 1)
-tile.openscreens.flatscreen2.name=§eFlatscreen (Tier 2)
-tile.openscreens.flatscreen3.name=§bFlatscreen (Tier 3)
+tile.openscreens.backflatscreen1.name=Flatscreen (Back) (Tier 1)
+tile.openscreens.backflatscreen2.name=§eFlatscreen (Back) (Tier 2)
+tile.openscreens.backflatscreen3.name=§bFlatscreen (Back) (Tier 3)
+tile.openscreens.frontflatscreen1.name=Flatscreen (Front) (Tier 1)
+tile.openscreens.frontflatscreen2.name=§eFlatscreen (Front) (Tier 2)
+tile.openscreens.frontflatscreen3.name=§bFlatscreen (Front) (Tier 3)

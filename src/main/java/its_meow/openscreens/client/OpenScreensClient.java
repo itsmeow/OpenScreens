@@ -19,9 +19,12 @@ public class OpenScreensClient {
     @SubscribeEvent
     public static void modelRegistry(ModelRegistryEvent event) {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFlatScreen.class, new RenderFlatScreen());
-        initModel(OpenScreens.FLAT_SCREEN_BLOCK_1, 0);
-        initModel(OpenScreens.FLAT_SCREEN_BLOCK_2, 0);
-        initModel(OpenScreens.FLAT_SCREEN_BLOCK_3, 0);
+        initModel(OpenScreens.BACK_FLAT_SCREEN_BLOCK_1, 0);
+        initModel(OpenScreens.BACK_FLAT_SCREEN_BLOCK_2, 0);
+        initModel(OpenScreens.BACK_FLAT_SCREEN_BLOCK_3, 0);
+        initModel(OpenScreens.FRONT_FLAT_SCREEN_BLOCK_1, 0);
+        initModel(OpenScreens.FRONT_FLAT_SCREEN_BLOCK_2, 0);
+        initModel(OpenScreens.FRONT_FLAT_SCREEN_BLOCK_3, 0);
     }
 
     public static void initModel(Item item, int meta) {

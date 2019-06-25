@@ -1,12 +1,8 @@
 package its_meow.openscreens.client.renderer.tileentity;
 
-import java.util.Set;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GLContext;
-
-import com.google.common.collect.Sets;
 
 import its_meow.openscreens.OpenScreens;
 import its_meow.openscreens.common.tileentity.TileEntityFlatScreen;
@@ -36,8 +32,6 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
     public double fadeRatio = 1.0D / (maxRenderDistanceSq - fadeDistanceSq);
 
     public TileEntityFlatScreen screen = null;
-
-    public Set<Block> screens = Sets.newHashSet(OpenScreens.FLAT_SCREEN_BLOCK_1, OpenScreens.FLAT_SCREEN_BLOCK_2, OpenScreens.FLAT_SCREEN_BLOCK_3);
 
     public boolean canUseBlendColor = GLContext.getCapabilities().OpenGL14;
 
@@ -72,7 +66,7 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
 
         RenderState.checkError(this.getClass().getName() + ".render: setup");
 
-        drawOverlay();
+        drawOverlay(te);
 
         RenderState.checkError(this.getClass().getName() + ".render: overlay");
 
@@ -87,7 +81,7 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
         RenderState.checkError(this.getClass().getName() + ".render: fade");
 
         if (screen.buffer().isRenderingEnabled()) {
-            draw();
+            draw(te);
         }
 
         RenderState.disableBlend();
@@ -108,8 +102,8 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
         }
         
         switch(screen.pitch()) {
-        case DOWN: GlStateManager.rotate(90, 1, 0, 0); break;//GlStateManager.translate(0, screen.height() / 2 , -screen.height() + 1); break;
-        case UP: GlStateManager.rotate(-90, 1, 0, 0); break;//GlStateManager.translate(0, 0, screen.height()); break;
+        case DOWN: GlStateManager.rotate(90, 1, 0, 0); break;
+        case UP: GlStateManager.rotate(-90, 1, 0, 0); break;
         default: break;
         }
 
@@ -128,17 +122,16 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
 
     }
 
-    private void drawOverlay() {
+    private void drawOverlay(TileEntityFlatScreen te) {
         if (screen.facing() == EnumFacing.UP || screen.facing() == EnumFacing.DOWN) {
             // Show up vector overlay when holding same screen block.
             ItemStack stack = Minecraft.getMinecraft().player.getHeldItemMainhand();
             if (!stack.isEmpty()) {
-                if (Wrench.holdsApplicableWrench(Minecraft.getMinecraft().player, screen.getPos()) || screens.contains(Block.getBlockFromItem(stack.getItem()))) {
+                if (Wrench.holdsApplicableWrench(Minecraft.getMinecraft().player, screen.getPos()) || OpenScreens.SCREENS.contains(Block.getBlockFromItem(stack.getItem()))) {
                     GlStateManager.pushMatrix();
                     transform();
                     GlStateManager.depthMask(false);
-                    GlStateManager.translate(screen.width() / 2f - 0.5f, screen.height() / 2f - 0.5f, -0.935f);
-
+                    GlStateManager.translate(screen.width() / 2f - 0.5f, screen.height() / 2f - 0.5f, te.isBack ? -0.935f : 0.05f);
                     Tessellator t = Tessellator.getInstance();
                     BufferBuilder r = t.getBuffer();
 
@@ -159,7 +152,7 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
         }
     }
 
-    private void draw() {
+    private void draw(TileEntityFlatScreen te) {
         RenderState.checkError(this.getClass().getName() + ".draw: entering (aka: wasntme)");
 
         float sx = screen.width();
@@ -192,7 +185,7 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
         }
 
         // Slightly offset the text so it doesn't clip into the screen.
-        GlStateManager.translate(0, 0, -0.94 + 0.01);
+        GlStateManager.translate(0, 0, (te.isBack ? -0.94 : 0) + 0.01);
 
         RenderState.checkError(this.getClass().getName() + ".draw: setup");
 
