@@ -12,6 +12,7 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -77,8 +78,8 @@ public class BlockHoloScreenEmitter extends RedstoneAware {
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if(player.getHeldItem(hand).getItem().getRegistryName().toString().equals("opencomputers:analyzer")) { 
-            return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ); 
+        if(player.getHeldItem(hand).getItem().getRegistryName().toString().equals("opencomputers:analyzer")) {
+            return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
         } else if(world.getTileEntity(pos) instanceof TileEntityHoloScreen) {
             TileEntityHoloScreen screen = (TileEntityHoloScreen) world.getTileEntity(pos);
             if(screen.hasKeyboard() && !player.isSneaking()) {
@@ -99,6 +100,14 @@ public class BlockHoloScreenEmitter extends RedstoneAware {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         tooltip.add(new TextComponentTranslation("tooltip.openscreens.holoscreen.info").getFormattedText());
         tooltip.add(new TextComponentTranslation("tooltip.openscreens.holoscreen.dyeable").getFormattedText());
+        if(GuiScreen.isShiftKeyDown()) {
+            tooltip.add(new TextComponentTranslation("tooltip.openscreens.holoscreen.left").getFormattedText());
+            tooltip.add(new TextComponentTranslation("tooltip.openscreens.holoscreen.right").getFormattedText());
+            tooltip.add(new TextComponentTranslation("tooltip.openscreens.holoscreen.front").getFormattedText());
+            tooltip.add(new TextComponentTranslation("tooltip.openscreens.holoscreen.top").getFormattedText());
+        } else {
+            tooltip.add(new TextComponentTranslation("tooltip.openscreens.holoscreen.moreinfo").getFormattedText());
+        }
     }
 
     @Override

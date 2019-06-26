@@ -42,12 +42,12 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
         RenderState.checkError(this.getClass().getName() + ".render: entering (aka: wasntme)");
 
         this.screen = te;
-        if (!screen.isOrigin()) {
+        if(!screen.isOrigin()) {
             return;
         }
 
         double distance = playerDistanceSq() / Math.min(screen.width(), screen.height());
-        if (distance > maxRenderDistanceSq) {
+        if(distance > maxRenderDistanceSq) {
             return;
         }
 
@@ -70,9 +70,9 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
 
         RenderState.checkError(this.getClass().getName() + ".render: overlay");
 
-        if (distance > fadeDistanceSq) {
+        if(distance > fadeDistanceSq) {
             float alpha = (float) Math.max(0, 1 - ((distance - fadeDistanceSq) * fadeRatio));
-            if (canUseBlendColor) {
+            if(canUseBlendColor) {
                 GL14.glBlendColor(0, 0, 0, alpha);
                 GlStateManager.blendFunc(GL11.GL_CONSTANT_ALPHA, GL11.GL_ONE);
             }
@@ -80,7 +80,7 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
 
         RenderState.checkError(this.getClass().getName() + ".render: fade");
 
-        if (screen.buffer().isRenderingEnabled()) {
+        if(screen.buffer().isRenderingEnabled()) {
             draw(te);
         }
 
@@ -95,27 +95,34 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
 
     public void transform() {
         switch(screen.yaw()) {
-        case WEST: GlStateManager.rotate(-90, 0, 1, 0); break;
-        case NORTH: GlStateManager.rotate(180, 0, 1, 0); break;
-        case EAST: GlStateManager.rotate(90, 0, 1, 0); break;
-        default: break;
+        case WEST:
+            GlStateManager.rotate(-90, 0, 1, 0);
+            break;
+        case NORTH:
+            GlStateManager.rotate(180, 0, 1, 0);
+            break;
+        case EAST:
+            GlStateManager.rotate(90, 0, 1, 0);
+            break;
+        default:
+            break;
         }
-        
+
         switch(screen.pitch()) {
-        case DOWN: GlStateManager.rotate(90, 1, 0, 0); break;
-        case UP: GlStateManager.rotate(-90, 1, 0, 0); break;
-        default: break;
+        case DOWN:
+            GlStateManager.rotate(90, 1, 0, 0);
+            break;
+        case UP:
+            GlStateManager.rotate(-90, 1, 0, 0);
+            break;
+        default:
+            break;
         }
-
-
 
         // Fit area to screen (bottom left = bottom left).
         GlStateManager.translate(-0.5f, -0.5f, 0.5f);
 
         GlStateManager.translate(0, screen.height(), 0);
-
-
-
 
         // Flip text upside down.
         GlStateManager.scale(1, -1, 1);
@@ -123,11 +130,11 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
     }
 
     private void drawOverlay(TileEntityFlatScreen te) {
-        if (screen.facing() == EnumFacing.UP || screen.facing() == EnumFacing.DOWN) {
+        if(screen.facing() == EnumFacing.UP || screen.facing() == EnumFacing.DOWN) {
             // Show up vector overlay when holding same screen block.
             ItemStack stack = Minecraft.getMinecraft().player.getHeldItemMainhand();
-            if (!stack.isEmpty()) {
-                if (Wrench.holdsApplicableWrench(Minecraft.getMinecraft().player, screen.getPos()) || OpenScreens.SCREENS.contains(Block.getBlockFromItem(stack.getItem()))) {
+            if(!stack.isEmpty()) {
+                if(Wrench.holdsApplicableWrench(Minecraft.getMinecraft().player, screen.getPos()) || OpenScreens.SCREENS.contains(Block.getBlockFromItem(stack.getItem()))) {
                     GlStateManager.pushMatrix();
                     transform();
                     GlStateManager.depthMask(false);
@@ -161,9 +168,9 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
         float th = sy * 16f;
 
         transform();
-        
+
         float border = 0.5F;
-        
+
         // Offset from border.
         GlStateManager.translate(sx * border / tw, sy * border / th, 0);
 
@@ -176,7 +183,7 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
         float sizeY = screen.buffer().renderHeight();
         float scaleX = isx / sizeX;
         float scaleY = isy / sizeY;
-        if (scaleX > scaleY) {
+        if(scaleX > scaleY) {
             GlStateManager.translate(sizeX * 0.5f * (scaleX - scaleY), 0, 0);
             GlStateManager.scale(scaleY, scaleY, 1);
         } else {
@@ -217,10 +224,10 @@ public class RenderFlatScreen extends TileEntitySpecialRenderer<TileEntityFlatSc
     }
 
     private static double fixDiff(double a, double b) {
-        if (a < -b) {
+        if(a < -b) {
             double d = a + b;
             return d * d;
-        } else if (a > b) {
+        } else if(a > b) {
             double d = a - b;
             return d * d;
         } else {

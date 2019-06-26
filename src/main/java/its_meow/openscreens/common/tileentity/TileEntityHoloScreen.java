@@ -1,7 +1,9 @@
 package its_meow.openscreens.common.tileentity;
 
+import li.cil.oc.api.network.Node;
 import li.cil.oc.common.tileentity.Screen;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumFacing.Axis;
 
@@ -11,21 +13,22 @@ public class TileEntityHoloScreen extends Screen {
         super(tier);
     }
 
-    public TileEntityHoloScreen() {}
+    public TileEntityHoloScreen() {
+    }
 
     public void onShiftRightClickEmpty(EnumFacing face, EnumFacing stateFace) {
         if(face.getAxis() != Axis.Y) {
-            if(stateFace == face.rotateY() /*&& this.width() < 10*/) {
+            if(stateFace == face.rotateY() /* && this.width() < 10 */) {
                 this.width_$eq(this.width() + 1);
-            } else if(stateFace == face.rotateYCCW() && this.width() > 1){
+            } else if(stateFace == face.rotateYCCW() && this.width() > 1) {
                 this.width_$eq(this.width() - 1);
-            } else if(stateFace == face && this.height() > 1){
+            } else if(stateFace == face && this.height() > 1) {
                 this.height_$eq(this.height() - 1);
             }
         } else {
-            if(EnumFacing.UP == face /*&& this.height() < 10*/) {
+            if(EnumFacing.UP == face /* && this.height() < 10 */) {
                 this.height_$eq(this.height() + 1);
-            } else if(EnumFacing.DOWN == face && this.height() > 1){
+            } else if(EnumFacing.DOWN == face && this.height() > 1) {
                 this.height_$eq(this.height() - 1);
             }
         }
@@ -47,13 +50,26 @@ public class TileEntityHoloScreen extends Screen {
     }
 
     @Override
-    public void checkMultiBlock() {}
+    public void checkMultiBlock() {
+    }
 
     @Override
-    public int delayUntilCheckForMultiBlock() {return 1;}
+    public int delayUntilCheckForMultiBlock() {
+        return 1;
+    }
 
     @Override
-    public void delayUntilCheckForMultiBlock_$eq(int x$1) {}
-
+    public void delayUntilCheckForMultiBlock_$eq(int x$1) {
+    }
+    
+    @Override
+    public Node sidedNode(EnumFacing side) {
+        Node node = super.sidedNode(side);
+        TileEntity te = getWorld().getTileEntity(getPos().offset(side));
+        if(te instanceof Screen) {
+            return null;
+        }
+        return node;
+    }
 
 }

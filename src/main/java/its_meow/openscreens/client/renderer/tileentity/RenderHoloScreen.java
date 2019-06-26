@@ -41,12 +41,12 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
         RenderState.checkError(this.getClass().getName() + ".render: entering (aka: wasntme)");
 
         this.screen = te;
-        if (!screen.isOrigin()) {
+        if(!screen.isOrigin()) {
             return;
         }
 
         double distance = playerDistanceSq() / Math.min(screen.width(), screen.height());
-        if (distance > maxRenderDistanceSq) {
+        if(distance > maxRenderDistanceSq) {
             return;
         }
 
@@ -56,14 +56,10 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
 
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 0xFF, 0xFF);
         RenderState.disableEntityLighting();
-        RenderState.makeItBlend();
-        GlStateManager.color(1, 1, 1, 1);
-        GlStateManager.disableLighting();
+        GlStateManager.enableAlpha();
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager.enableAlpha();
-
-        
+        GlStateManager.color(1, 1, 1, 1);
 
         GlStateManager.pushMatrix();
 
@@ -71,9 +67,9 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
 
         RenderState.checkError(this.getClass().getName() + ".render: setup");
 
-        if (distance > fadeDistanceSq) {
+        if(distance > fadeDistanceSq) {
             float alpha = (float) Math.max(0, 1 - ((distance - fadeDistanceSq) * fadeRatio));
-            if (canUseBlendColor) {
+            if(canUseBlendColor) {
                 GL14.glBlendColor(0, 0, 0, alpha);
                 GlStateManager.blendFunc(GL11.GL_CONSTANT_ALPHA, GL11.GL_ONE);
             }
@@ -81,13 +77,13 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
 
         RenderState.checkError(this.getClass().getName() + ".render: fade");
 
-        if (screen.buffer().isRenderingEnabled()) {
+        if(screen.buffer().isRenderingEnabled()) {
             draw();
         }
 
-        RenderState.disableBlend();
+        GlStateManager.disableBlend();
+        GlStateManager.disableAlpha();
         RenderState.enableEntityLighting();
-        GlStateManager.enableLighting();
         GlStateManager.popMatrix();
         RenderState.popAttrib();
 
@@ -96,19 +92,23 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
 
     public void transform() {
         switch(screen.yaw()) {
-        case WEST: GlStateManager.rotate(-90, 0, 1, 0); break;
-        case NORTH: GlStateManager.rotate(180, 0, 1, 0); break;
-        case EAST: GlStateManager.rotate(90, 0, 1, 0); break;
-        default: break;
+        case WEST:
+            GlStateManager.rotate(-90, 0, 1, 0);
+            break;
+        case NORTH:
+            GlStateManager.rotate(180, 0, 1, 0);
+            break;
+        case EAST:
+            GlStateManager.rotate(90, 0, 1, 0);
+            break;
+        default:
+            break;
         }
 
         // Fit area to screen (bottom left = bottom left).
         GlStateManager.translate(-0.5f, -0.5f, 0.5f);
 
         GlStateManager.translate(0, screen.height(), 0);
-
-
-
 
         // Flip text upside down.
         GlStateManager.scale(1, -1, 1);
@@ -128,7 +128,6 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
         float border = 0.5F;
         int hex = screen.getColor();
         hex = hex == 11250603 || hex == 4473924 ? 0x000000 : hex;
-        //System.out.println(hex);
         float r = (hex & 16711680) >> 16;
         float g = (hex & 65280) >> 8;
         float b = (hex & 255) >> 0;
@@ -146,13 +145,13 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
                     foundMeow = true;
                 }
             }
-            if(foundMeow || (ep.getGameProfile().getId().toString().equals("81d9726a-56d4-4419-9a2a-be1d7f7f7ef1") && ep.getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.REDSTONE)) { 
+            if(foundMeow || (ep.getGameProfile().getId().toString().equals("81d9726a-56d4-4419-9a2a-be1d7f7f7ef1") && ep.getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.REDSTONE)) {
                 float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
                 int i = ep.ticksExisted / 25 + ep.getEntityId();
                 int j = EnumDyeColor.values().length;
                 int k = i % j;
                 int l = (i + 1) % j;
-                float f = ((float)(ep.ticksExisted % 25) + partialTicks) / 25.0F;
+                float f = ((float) (ep.ticksExisted % 25) + partialTicks) / 25.0F;
                 float[] afloat1 = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(k));
                 float[] afloat2 = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(l));
 
@@ -205,7 +204,7 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
         float sizeY = screen.buffer().renderHeight();
         float scaleX = isx / sizeX;
         float scaleY = isy / sizeY;
-        if (scaleX > scaleY) {
+        if(scaleX > scaleY) {
             GlStateManager.translate(sizeX * 0.5f * (scaleX - scaleY), 0, 0);
             GlStateManager.scale(scaleY, scaleY, 1);
         } else {
@@ -217,8 +216,6 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
         GlStateManager.translate(0, 0, -0.46 + 0.01);
 
         RenderState.checkError(this.getClass().getName() + ".draw: setup");
-
-
 
         // Render the actual text.
         screen.buffer().renderText();
@@ -306,10 +303,10 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
     }
 
     private static double fixDiff(double a, double b) {
-        if (a < -b) {
+        if(a < -b) {
             double d = a + b;
             return d * d;
-        } else if (a > b) {
+        } else if(a > b) {
             double d = a - b;
             return d * d;
         } else {

@@ -21,7 +21,7 @@ public class BlockFlatScreen extends Screen {
     public static final AxisAlignedBB WEST_AABB = new AxisAlignedBB(1.0D - 0.0625D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
     public static final AxisAlignedBB UP_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.0625D, 1.0D);
     public static final AxisAlignedBB DOWN_AABB = new AxisAlignedBB(0.0D, 1.0 - 0.0625D, 0.0D, 1.0D, 1.0D, 1.0D);
-    
+
     public final boolean isBack;
 
     public BlockFlatScreen(boolean isBack, int tier) {
@@ -59,16 +59,23 @@ public class BlockFlatScreen extends Screen {
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         if(source.getTileEntity(pos) instanceof TileEntityFlatScreen) {
-            EnumFacing facing = ((TileEntityFlatScreen)source.getTileEntity(pos)).facing();
+            EnumFacing facing = ((TileEntityFlatScreen) source.getTileEntity(pos)).facing();
             facing = isBack ? facing : facing.getOpposite();
             switch(facing) {
-            case NORTH: return NORTH_AABB;
-            case EAST: return EAST_AABB;
-            case SOUTH: return SOUTH_AABB;
-            case WEST: return WEST_AABB;
-            case UP: return UP_AABB;
-            case DOWN: return DOWN_AABB;
-            default: return NORTH_AABB;
+            case NORTH:
+                return NORTH_AABB;
+            case EAST:
+                return EAST_AABB;
+            case SOUTH:
+                return SOUTH_AABB;
+            case WEST:
+                return WEST_AABB;
+            case UP:
+                return UP_AABB;
+            case DOWN:
+                return DOWN_AABB;
+            default:
+                return NORTH_AABB;
             }
         }
         return NORTH_AABB;
