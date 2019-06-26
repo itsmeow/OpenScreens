@@ -5,12 +5,14 @@
   "description": "Adds new screens to OpenComputers",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://minecraft.curseforge.com/projects/openscreens",
   "updateUrl": "",
   "authorList": ["its_meow"],
-  "credits": "its_meow: everything",
-  "logoFile": "",
+  "credits": "its_meow: programming, Zef: hologram screen model and texture",
+  "logoFile": "openscreenslogo.png",
   "screenshots": [],
-  "dependencies": []
+  "useDependencyInformation": true,
+  "dependencies": ["opencomputers"],
+  "requiredMods": ["opencomputers"]
 }
 ]

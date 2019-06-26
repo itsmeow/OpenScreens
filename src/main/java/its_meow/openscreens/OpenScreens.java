@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod.EventBusSubscriber
-@Mod(modid = OpenScreens.MODID, name = OpenScreens.NAME, version = OpenScreens.VERSION, acceptedMinecraftVersions = "[1.12,1.12.2]")
+@Mod(modid = OpenScreens.MODID, name = OpenScreens.NAME, version = OpenScreens.VERSION, acceptedMinecraftVersions = "[1.12,1.12.2]", dependencies = "after:opencomputers")
 public class OpenScreens {
 
     public static final String MODID = "openscreens";

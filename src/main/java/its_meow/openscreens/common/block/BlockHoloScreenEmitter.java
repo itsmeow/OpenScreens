@@ -91,6 +91,7 @@ public class BlockHoloScreenEmitter extends RedstoneAware {
                 screen.onShiftRightClickEmpty(side, state.getValue(FACING));
                 return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
             }
+            screen.markDirty();
         }
         return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
     }
