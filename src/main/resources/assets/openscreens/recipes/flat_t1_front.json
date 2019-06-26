@@ -1,0 +1,38 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "rgg",
+        "rcp",
+        "rgg"
+    ],
+    "key":
+    {
+        "r":
+        {
+            "item": "minecraft:redstone",
+            "data": 0
+        },
+        "g":
+        {
+            "item": "minecraft:gold_ingot",
+            "data": 0
+        },
+        "p":
+        {
+        	"item": "minecraft:glass_pane",
+        	"data": 0
+        },
+        "c":
+        {
+        	"item": "opencomputers:material",
+        	"data": 7
+        }
+    },
+    "result":
+    {
+        "item": "openscreens:frontflatscreen1",
+        "count": 1,
+        "data": 0
+    }
+}

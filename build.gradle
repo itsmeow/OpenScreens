@@ -30,10 +30,15 @@ repositories {
     maven { 
         url = "http://maven.cil.li/"
 	}
+	maven {
+        name = "JEI"
+        url = "http://dvs1.progwml6.com/files/maven"
+	}
 }
 
 dependencies {
     deobfCompile "li.cil.oc:OpenComputers:MC${project.mc_version}-${project.opencomputers_version}"
+    deobfCompile "mezz.jei:jei_${project.mc_version}:${project.jei_version}"
 }
 
 processResources {

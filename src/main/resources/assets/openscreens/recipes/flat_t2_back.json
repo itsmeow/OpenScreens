@@ -1,0 +1,48 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "ddr",
+        "cpg",
+        "ddb"
+    ],
+    "key":
+    {
+        "r":
+        {
+            "item": "minecraft:dye",
+            "data": 1
+        },
+        "g":
+        {
+            "item": "minecraft:dye",
+            "data": 2
+        },
+        "b":
+        {
+            "item": "minecraft:dye",
+            "data": 4
+        },
+        "d":
+        {
+            "item": "opencomputers:material",
+            "data": 29
+        },
+        "p":
+        {
+        	"item": "minecraft:glass_pane",
+        	"data": 0
+        },
+        "c":
+        {
+        	"item": "opencomputers:material",
+        	"data": 8
+        }
+    },
+    "result":
+    {
+        "item": "openscreens:backflatscreen2",
+        "count": 1,
+        "data": 0
+    }
+}

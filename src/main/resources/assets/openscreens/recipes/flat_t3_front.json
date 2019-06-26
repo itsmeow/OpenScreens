@@ -1,0 +1,38 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "goo",
+        "gcp",
+        "goo"
+    ],
+    "key":
+    {
+        "o":
+        {
+            "item": "minecraft:obsidian",
+            "data": 0
+        },
+        "g":
+        {
+            "item": "minecraft:glowstone_dust",
+            "data": 0
+        },
+        "p":
+        {
+        	"item": "minecraft:glass_pane",
+        	"data": 0
+        },
+        "c":
+        {
+        	"item": "opencomputers:material",
+        	"data": 9
+        }
+    },
+    "result":
+    {
+        "item": "openscreens:frontflatscreen3",
+        "count": 1,
+        "data": 0
+    }
+}

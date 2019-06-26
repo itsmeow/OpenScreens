@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "facing=north": { "model": "openscreens:holoscreen1" },
+        "facing=south": { "model": "openscreens:holoscreen1", "y": 180 },
+        "facing=east":  { "model": "openscreens:holoscreen1", "y": 90 },
+        "facing=west":  { "model": "openscreens:holoscreen1", "y": 270 },
+        "inventory": [{
+           "model": "openscreens:holoscreen1"
+		}]
+    }
+}

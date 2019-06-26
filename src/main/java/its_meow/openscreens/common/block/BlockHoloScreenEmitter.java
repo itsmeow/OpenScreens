@@ -1,28 +1,32 @@
 package its_meow.openscreens.common.block;
 
-import its_meow.openscreens.common.tileentity.TileEntityFlatScreen;
+import java.util.List;
+
+import its_meow.openscreens.common.tileentity.TileEntityHoloScreen;
 import li.cil.oc.OpenComputers$;
 import li.cil.oc.common.GuiType$;
-import net.minecraft.block.Block;
+import li.cil.oc.common.block.RedstoneAware;
 import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockHoloScreenEmitter extends Block {
+public class BlockHoloScreenEmitter extends RedstoneAware {
 
     public static final AxisAlignedBB BOUNDS = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
     public static final EnumFacing[] VALID_ROTATIONS = EnumFacing.HORIZONTALS;
@@ -31,7 +35,6 @@ public class BlockHoloScreenEmitter extends Block {
     public final int tier;
 
     public BlockHoloScreenEmitter(int tier) {
-        super(Material.ROCK);
         this.setHardness(4F);
         this.setHarvestLevel("pickaxe", 0);
         this.tier = tier;
@@ -39,7 +42,7 @@ public class BlockHoloScreenEmitter extends Block {
 
     @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
 
     @Override
@@ -75,20 +78,29 @@ public class BlockHoloScreenEmitter extends Block {
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if(player.getHeldItem(hand).getItem().getRegistryName().toString().equals("opencomputers:analyzer")) { 
-            return false; 
-        } else if(world.getTileEntity(pos) instanceof li.cil.oc.common.tileentity.Screen) {
-            li.cil.oc.common.tileentity.Screen screen = (li.cil.oc.common.tileentity.Screen) world.getTileEntity(pos);
-            if(screen.hasKeyboard()) {
-                if (world.isRemote) {
+            return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ); 
+        } else if(world.getTileEntity(pos) instanceof TileEntityHoloScreen) {
+            TileEntityHoloScreen screen = (TileEntityHoloScreen) world.getTileEntity(pos);
+            if(screen.hasKeyboard() && !player.isSneaking()) {
+                if(world.isRemote) {
                     player.openGui(OpenComputers$.MODULE$, GuiType$.MODULE$.Screen().id(), world, pos.getX(), pos.getY(), pos.getZ());
                 }
-                return true;
+                return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
+            } else if(player.isSneaking() && player.getHeldItem(hand).isEmpty()) {
+                screen.onShiftRightClickEmpty(side, state.getValue(FACING));
+                return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
             }
         }
-        return false;
+        return super.onBlockActivated(world, pos, state, player, hand, side, hitX, hitY, hitZ);
     }
 
-    @SuppressWarnings("deprecation")
+    @Override
+    public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        tooltip.add(new TextComponentTranslation("tooltip.openscreens.holoscreen.info").getFormattedText());
+        tooltip.add(new TextComponentTranslation("tooltip.openscreens.holoscreen.dyeable").getFormattedText());
+    }
+
     @Override
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
         return super.shouldSideBeRendered(state, world, pos, side) || side == EnumFacing.UP;
@@ -120,8 +132,13 @@ public class BlockHoloScreenEmitter extends Block {
     }
 
     @Override
-    public TileEntityFlatScreen createTileEntity(World world, IBlockState state) {
-        return new TileEntityFlatScreen(true, tier);
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public TileEntityHoloScreen createTileEntity(World world, IBlockState state) {
+        return new TileEntityHoloScreen(tier);
     }
 
 }

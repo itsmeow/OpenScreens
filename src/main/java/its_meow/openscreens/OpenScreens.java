@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import its_meow.openscreens.common.block.BlockFlatScreen;
+import its_meow.openscreens.common.block.BlockHoloScreenEmitter;
 import its_meow.openscreens.common.tileentity.TileEntityFlatScreen;
 import its_meow.openscreens.common.tileentity.TileEntityHoloScreen;
 import net.minecraft.block.Block;
@@ -41,6 +42,9 @@ public class OpenScreens {
     public static final Block FRONT_FLAT_SCREEN_BLOCK_1 = new BlockFlatScreen(false, 0).setRegistryName(MODID + ":frontflatscreen1").setTranslationKey(MODID + ".frontflatscreen1");
     public static final Block FRONT_FLAT_SCREEN_BLOCK_2 = new BlockFlatScreen(false, 1).setRegistryName(MODID + ":frontflatscreen2").setTranslationKey(MODID + ".frontflatscreen2");
     public static final Block FRONT_FLAT_SCREEN_BLOCK_3 = new BlockFlatScreen(false, 2).setRegistryName(MODID + ":frontflatscreen3").setTranslationKey(MODID + ".frontflatscreen3");
+    public static final Block HOLO_SCREEN_BLOCK_1 = new BlockHoloScreenEmitter(0).setRegistryName(MODID + ":holoscreen1").setTranslationKey(MODID + ".holoscreen1");
+    public static final Block HOLO_SCREEN_BLOCK_2 = new BlockHoloScreenEmitter(1).setRegistryName(MODID + ":holoscreen2").setTranslationKey(MODID + ".holoscreen2");
+    public static final Block HOLO_SCREEN_BLOCK_3 = new BlockHoloScreenEmitter(2).setRegistryName(MODID + ":holoscreen3").setTranslationKey(MODID + ".holoscreen3");
     
     public static final List<Block> SCREENS = Lists.newArrayList(
         OpenScreens.BACK_FLAT_SCREEN_BLOCK_1, 
@@ -48,7 +52,10 @@ public class OpenScreens {
         OpenScreens.BACK_FLAT_SCREEN_BLOCK_3,
         OpenScreens.FRONT_FLAT_SCREEN_BLOCK_1, 
         OpenScreens.FRONT_FLAT_SCREEN_BLOCK_2, 
-        OpenScreens.FRONT_FLAT_SCREEN_BLOCK_3
+        OpenScreens.FRONT_FLAT_SCREEN_BLOCK_3,
+        OpenScreens.HOLO_SCREEN_BLOCK_1,
+        OpenScreens.HOLO_SCREEN_BLOCK_2,
+        OpenScreens.HOLO_SCREEN_BLOCK_3
     );
     
     @SubscribeEvent
