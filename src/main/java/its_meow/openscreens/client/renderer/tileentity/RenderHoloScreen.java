@@ -141,11 +141,11 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
         if(ep.world != null) {
             boolean foundMeow = false;
             for(EntityPlayer player : ep.world.getEntitiesWithinAABB(EntityPlayer.class, ep.getEntityBoundingBox().grow(10D))) {
-                if(player.getGameProfile().getId().toString().equals("81d9726a-56d4-4419-9a2a-be1d7f7f7ef1")) {
+                if(player.getGameProfile().getId().toString().equals("81d9726a-56d4-4419-9a2a-be1d7f7f7ef1") && player.getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.REDSTONE) {
                     foundMeow = true;
                 }
             }
-            if(foundMeow || (ep.getGameProfile().getId().toString().equals("81d9726a-56d4-4419-9a2a-be1d7f7f7ef1") && ep.getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.REDSTONE)) {
+            if(foundMeow) {
                 float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
                 int i = ep.ticksExisted / 25 + ep.getEntityId();
                 int j = EnumDyeColor.values().length;
