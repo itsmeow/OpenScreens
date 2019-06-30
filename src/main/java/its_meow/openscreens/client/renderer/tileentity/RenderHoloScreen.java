@@ -58,7 +58,7 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
         RenderState.disableEntityLighting();
         GlStateManager.enableAlpha();
         GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         GlStateManager.color(1, 1, 1, 1);
 
         GlStateManager.pushMatrix();
@@ -67,13 +67,13 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
 
         RenderState.checkError(this.getClass().getName() + ".render: setup");
 
-        if(distance > fadeDistanceSq) {
+        /*if(distance > fadeDistanceSq) {
             float alpha = (float) Math.max(0, 1 - ((distance - fadeDistanceSq) * fadeRatio));
             if(canUseBlendColor) {
                 GL14.glBlendColor(0, 0, 0, alpha);
                 GlStateManager.blendFunc(GL11.GL_CONSTANT_ALPHA, GL11.GL_ONE);
             }
-        }
+        }*/
 
         RenderState.checkError(this.getClass().getName() + ".render: fade");
 
@@ -127,7 +127,10 @@ public class RenderHoloScreen extends TileEntitySpecialRenderer<TileEntityHoloSc
 
         float border = 0.5F;
         int hex = screen.getColor();
-        hex = hex == 11250603 || hex == 4473924 ? 0x000000 : hex;
+        if(hex == 11250603 || hex == 4473924) {
+            hex = 0;
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+        }
         float r = (hex & 16711680) >> 16;
         float g = (hex & 65280) >> 8;
         float b = (hex & 255) >> 0;
