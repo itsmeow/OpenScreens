@@ -1,7 +1,6 @@
 package its_meow.openscreens.client.renderer.tileentity;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GLContext;
 
 import its_meow.openscreens.common.tileentity.TileEntityHoloScreen;
